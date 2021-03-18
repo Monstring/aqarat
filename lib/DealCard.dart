@@ -21,7 +21,7 @@ class DealCard extends StatelessWidget {
           children: <Widget>[
             ListTile(
               leading: Icon(Icons.account_box_rounded),
-              title: Text(price),
+              title: Text(price.toString()),
               subtitle: Text(description),
             ),
             Row(
