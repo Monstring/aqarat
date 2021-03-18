@@ -1,4 +1,4 @@
-import 'package:aqarat/LoadingDummy.dart';
+import 'package:aqarat/DealingsList.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: LoadingDummy(),
+      home: DealingsList(),
     );
   }
 }

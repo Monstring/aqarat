@@ -1,17 +1,17 @@
 import 'dart:convert';
 
 import 'package:aqarat/DealCard.dart';
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-String fakeData = """{
-  "results": [
-    {"price": "8, 000", "type": "House", "description": "a smol house"},
-    {"price": "32, 000", "type": "Mansion", "description": "very big chungus"},
-    {"price": "4, 000", "type": "villa", "description": "2 people can fit inside"}
-  ]
-}""";
-var map = jsonDecode(fakeData);
+Future<Map> load() async {
+  var client = http.Client();
+  var response =
+      await client.get(Uri.parse('https://saebalaqar.herokuapp.com/current/'));
+  client.close();
+  return jsonDecode(response.body);
+}
 
 class DealingsList extends StatefulWidget {
   DealingsList({Key key}) : super(key: key);
@@ -31,35 +31,28 @@ class _DealingsListState extends State<DealingsList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('aqarat'),
-      ),
-      body: ListView(
-        children: <DealCard>[
-          ...map['results'].map((value) {
-            return DealCard(
-              description: value['description'],
-              landType: value['type'],
-              price: value['price'],
-            );
-          }),
-          DealCard(
-            description: 'my only house',
-            landType: 'House',
-            price: '5,000',
-          ),
-          DealCard(
-            description: 'I have a bunch of houses',
-            landType: 'House',
-            price: '9,000',
-          ),
-          DealCard(
-            description: 'can\'t handle bills',
-            landType: 'Mansion',
-            price: '14,000',
-          ),
-        ],
-      ),
-    );
+        appBar: AppBar(
+          title: Text('aqarat'),
+        ),
+        body: FutureBuilder<Map>(
+            future: load(),
+            builder: (cotext, snapshot) {
+              if (snapshot.connectionState != ConnectionState.done) {
+                return Text('loading...');
+              }
+              return ListView(
+                children: snapshot.data['results']
+                    .map((value) {
+                      print(value);
+                      return DealCard(
+                        description: value['description:'],
+                        landType: value['type:'],
+                        price: value['price:'].toString(),
+                      );
+                    })
+                    .cast<Widget>()
+                    .toList(),
+              );
+            }));
   }
 }
