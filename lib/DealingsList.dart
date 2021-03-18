@@ -22,11 +22,21 @@ class DealingsList extends StatefulWidget {
 
 class _DealingsListState extends State<DealingsList> {
   @override
+  void initState() {
+    super.initState();
+  }
+
+  bool isLoading = true;
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text('aqarat'),
+      ),
       body: ListView(
         children: <DealCard>[
-          map['results'].map((value) {
+          ...map['results'].map((value) {
             return DealCard(
               description: value['description'],
               landType: value['type'],

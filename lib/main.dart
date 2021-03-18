@@ -1,5 +1,4 @@
-import 'package:aqarat/DealCard.dart';
-import 'package:aqarat/DealingsList.dart';
+import 'package:aqarat/LoadingDummy.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -24,7 +23,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: DealingsList(),
+      home: LoadingDummy(),
     );
   }
 }
